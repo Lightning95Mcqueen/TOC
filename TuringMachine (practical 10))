@@ -1,0 +1,52 @@
+class TuringMachine:
+    def __init__(self, input_string):
+        self.input_string = input_string
+        self.tape = list(input_string)
+        self.head = 0
+        self.state = "q0"
+        self.b_count = 0
+    
+    def transition(self):
+        if self.state == "q0":
+            if self.tape[self.head] == "a":
+                self.state = "q1"
+                self.head += 1
+            else:
+                return False
+        elif self.state == "q1":
+            if self.tape[self.head] == "b":
+                self.state = "q2"
+                self.b_count += 1
+                self.head += 1
+            else:
+                return False
+        elif self.state == "q2":
+            if self.tape[self.head] == "b":
+                self.b_count += 1
+                self.head += 1
+            elif self.tape[self.head] == "c":
+                self.state = "q3"
+                self.head += 1
+            else:
+                return False
+        elif self.state == "q3":
+            if self.tape[self.head] == "c":
+                self.head += 1
+                self.b_count -= 1
+                if self.b_count == 0:
+                    self.state = "q4"
+                else:
+                    return False
+                return True
+        return False
+
+    def run(self):
+        while self.head < len(self.tape) and self.transition():
+            pass
+        if self.head == len(self.tape) and self.state == "q4":
+            return True
+        return False
+
+input_string = "anbn"
+tm = TuringMachine(input_string)
+print(tm.run())

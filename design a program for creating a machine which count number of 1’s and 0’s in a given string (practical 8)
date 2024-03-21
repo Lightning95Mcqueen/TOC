@@ -1,0 +1,23 @@
+class FA:
+    def __init__(self):
+        self.current_state = "q0"
+        self.num_zeros = 0
+        self.num_ones = 0
+    
+    def transition(self, input_char):
+        if self.current_state == "q0":
+            if input_char == "0":
+                self.num_zeros += 1
+                self.current_state = "q0"
+            elif input_char == "1":
+                self.num_ones += 1
+                self.current_state = "q0"
+
+def process_input_string(input_string, automaton):
+    for char in input_string:
+        automaton.transition(char)
+    return automaton.num_zeros, automaton.num_ones
+
+input_string = "0101"
+automaton = FA()
+print(process_input_string(input_string, automaton))

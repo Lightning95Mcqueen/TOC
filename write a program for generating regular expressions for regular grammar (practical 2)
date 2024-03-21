@@ -1,0 +1,16 @@
+def generate_regex(grammar):
+    regex = ""
+    for production in grammar:
+        lhs, rhs = production.split(" -> ")
+        regex += "(" + rhs + ")|"
+
+    # Remove the last "|" character
+    regex = regex[:-1]
+
+    return regex
+
+grammar = [
+    "S -> aSb",
+    "S -> ab",
+]
+print(generate_regex(grammar))
